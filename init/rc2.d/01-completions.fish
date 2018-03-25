@@ -1,0 +1,15 @@
+complete -c project -x -a cd -d 'change to home dir of project'
+complete -c project -x -a goto -d 'change projects and go to home dir of chosen project'
+complete -c project -x -a help -d 'display usage info'
+complete -c project -x -a home -d 'go to the root directory of the current project'
+complete -c project -x -a ls -d 'list all available projects'
+complete -c project -x -a path -d 'get the root dir of the named project'
+complete -c project -x -a save -d 'save contents of project dir locally'
+complete -c project -x -a set  -d 'change current project'
+complete -c project -x -a sync -d 'save contents of project dir locally'
+
+# complete -c project -x -a create -d 'add a new project'
+
+# complete -c project -x -a XYZ -d 'XYZ'
+# complete -c project -x -a XYZ -d 'XYZ'
+# complete -c project -x -a XYZ -d 'XYZ'

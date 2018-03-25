@@ -6,49 +6,78 @@ function project
     return
   end
   switch $argv[1]
-    case home
-        project_help
+    case cd
+        project_cd $argv[2]
+    case goto
+        project_goto $argv[2]
     case help
         project_help
+    case home
+        project_home
+    case ls
+        project_list
+    case path
+        project_path $argv[2]
+    case save
+        project_save
+    case set
+        project_set $argv[2]
+    case sync
+        project_sync
     case '*'
       project_help
   end
 end
 
 function project_help -d "display usage info"
-  echo "Fishdots project Usage"
-  echo "======================"
+  
+  echo "Projects:"
+  colour_print normal "  Current Project: "
+  colour_print green $CURRENT_PROJECT_SN
+  echo ""
+  echo ""
+
+  echo "USAGE:"
+  echo ""
   echo "project <command> [options] [args]"
   echo ""
-  echo "project edit pattern"
-  echo "  edit the project identified by the path"
+  
+  echo "project cd"
+  echo "  change to home dir of project"
   echo ""
-  echo "project find pattern"
-  echo "  find the project by searching file names"
+
+  echo "project goto"
+  echo "  change projects and go to home dir of chosen project"
   echo ""
-  echo "project search pattern"
-  echo "  perform a full text search for patterns"
-  echo ""
-  echo "project create title"
-  echo "  create a new project"
-  echo ""
-  echo "project pcreate title"
-  echo "  create a new project within a project area"
-  echo ""
-  echo "project save"
-  echo "  save any new or modified projects locally"
-  echo ""
-  echo "project move"
-  echo "  explain,,,"
-  echo ""
-  echo "project sync"
-  echo "  synchronise projects with origin git repo"
-  echo ""
-  echo "project home"
-  echo "  cd to the projects directory"
-  echo ""
+
   echo "project help"
-  echo "  EXPL"
+  echo "  display usage info"
+  echo ""
+
+  echo "project home"
+  echo "  go to the root directory of the current project"
+  echo ""
+
+  echo "project ls"
+  echo "  list all available projects"
+  echo ""
+
+  echo "project path"
+  echo "  get the root dir of the named project"
+  echo ""
+
+  echo "project save"
+  echo "  save contents of project dir locally"
+  echo ""
+
+  echo "project set"
+  echo "  change current project"
+  echo ""
+
+  echo "project sync"
+  echo "  save contents of project dir locally"
+  echo ""
+
 end
 
 
@@ -58,6 +87,19 @@ end
 
 function project_name -a project_name
     echo (assoc.get project_names[$project_name])
+end
+
+function project_list -d "list projects with descriptions"
+    for key in $_project_names
+        if test $key = $CURRENT_PROJECT_SN
+            colour_print brblue "$key:  "
+            colour_print bryellow (assoc.get project_names[$key])
+        else
+            colour_print green "$key:  "
+            colour_print normal (assoc.get project_names[$key])
+        end
+        echo ""
+    end
 end
 
 function project_list_project_short_names
@@ -72,26 +114,26 @@ function project_list_project_long_names
     end
 end
 
-function goto -a project_name
-    ok "Switching to "(project_name $project_name)
-    set_current_project $project_name
-    pcd $project_name
+function project_home -d "goto home dir of current project"
+    project_cd $CURRENT_PROJECT_SN    
 end
 
-function set_current_project -a project_name
+function project_goto -a project_name -d "switch projects"
+    ok "Switching to "(project_name $project_name)
+    project_set $project_name
+    project_home
+end
+
+function project_set -a project_name
     set -U CURRENT_PROJECT_SN $project_name
 end
 
 function edit_project
-    _cd_project_directory
+    project_home
 	$EDITOR 
 end
 
-function _cd_current_project_directory
-    _cd_project_directory $CURRENT_PROJECT_SN
-end
-
-function _cd_project_directory -a project_name
+function project_cd -a project_name
     cd (project_path $project_name)
 end
 
@@ -123,3 +165,12 @@ function pcd -a project_name -d "switch to project directory"
     cd (project_path $project_name)
 end
 
+function project_save -d "save all new or modified notes locally"
+  set -l pp (project path $CURRENT_PROJECT_SN)
+  fishdots_git_save $pp  "project $CURRENT_PROJECT_SN wip"
+end
+
+function project_sync -d "save all notes to origin repo"
+  set -l pp (project path $CURRENT_PROJECT_SN)
+  fishdots_git_sync $pp  "project $CURRENT_PROJECT_SN wip"
+end
