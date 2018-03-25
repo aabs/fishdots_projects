@@ -11,7 +11,7 @@
     assoc.set project_paths[coins]   "$FINANCE_DIR"    
     assoc.set project_names[coins]  "Ledger crypto-coin accounts"    
     
-    assoc.set project_paths[erl]     "$PROJECT_HOME/by-technology/erlang/katas"    
+    assoc.set project_paths[erl]     "$PROJECT_HOME/by-technology/erlang/katas"   
     assoc.set project_names[erl]    "Erlang Code Katas"	
 
     assoc.set project_paths[fd]    "$FISHDOTS" 
