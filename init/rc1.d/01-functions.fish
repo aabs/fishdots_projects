@@ -110,7 +110,7 @@ end
 
 function project_list_project_long_names
     for key in $_project_names
-		echo (assoc.get project_names[$key])
+	echo (assoc.get project_names[$key])
     end
 end
 
@@ -125,7 +125,7 @@ function project_goto -a project_name -d "switch projects"
 end
 
 function project_set -a project_name
-    set -x CURRENT_PROJECT_SN $project_name
+    set -U CURRENT_PROJECT_SN $project_name
 end
 
 function edit_project
