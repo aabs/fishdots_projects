@@ -125,12 +125,12 @@ function project_goto -a project_name -d "switch projects"
 end
 
 function project_set -a project_name
-    set -U CURRENT_PROJECT_SN $project_name
+    set -x CURRENT_PROJECT_SN $project_name
 end
 
 function edit_project
     project_home
-	$EDITOR 
+    $EDITOR 
 end
 
 function project_cd -a project_name
@@ -143,7 +143,8 @@ function _create_project_task -a title
 end
 
 function _create_project_note_dated -a project_name
-    notes n "$CURRENT_PROJECT_SN/"(date --iso-8601)"-$project_name"
+    note pcreate (date --iso-8601)"-$project_name"
+    # notes n "$CURRENT_PROJECT_SN/"(date --iso-8601)"-$project_name"
 end
 
 function _project_quick_checkin -a checkin_message
