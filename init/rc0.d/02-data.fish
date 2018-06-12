@@ -6,8 +6,11 @@
 # assoc.rm  name[key]
 # assoc.has_key name[key]
 
-    set _project_names coins erl fd career thor notes kops probs fdp fdproj
+    set _project_names coins erl fd career thor notes kops probs fdp fdproj tlive
 
+    assoc.set project_paths[tlive]   "$HOME/dev/by-technology/elixir/tlive"    
+    assoc.set project_names[tlive]  "TLive 2 Development"    
+    
     assoc.set project_paths[coins]   "$FINANCE_DIR"    
     assoc.set project_names[coins]  "Ledger crypto-coin accounts"    
     

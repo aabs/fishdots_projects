@@ -110,7 +110,7 @@ end
 
 function project_list_project_long_names
     for key in $_project_names
-		echo (assoc.get project_names[$key])
+	echo (assoc.get project_names[$key])
     end
 end
 
@@ -130,7 +130,7 @@ end
 
 function edit_project
     project_home
-	$EDITOR 
+    $EDITOR 
 end
 
 function project_cd -a project_name
@@ -143,7 +143,8 @@ function _create_project_task -a title
 end
 
 function _create_project_note_dated -a project_name
-    notes n "$CURRENT_PROJECT_SN/"(date --iso-8601)"-$project_name"
+    note pcreate (date --iso-8601)"-$project_name"
+    # notes n "$CURRENT_PROJECT_SN/"(date --iso-8601)"-$project_name"
 end
 
 function _project_quick_checkin -a checkin_message
