@@ -150,7 +150,7 @@ function _project_quick_checkin -a checkin_message
     git add -A
     git rm (git ls-files --deleted) 2> /dev/null
     git commit --no-verify -m "$checkin_message"
-    git push origin (git branch-name)
+    git push origin (fishdots_git_branch_name)
 end
 
 function _project_detach_from_tmux_session
