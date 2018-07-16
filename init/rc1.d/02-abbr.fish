@@ -8,8 +8,8 @@ abbr --add pnote        '_create_project_note_dated'
 function _find_project_notes
     notes find $CURRENT_PROJECT_SN
 end
-abbr --add pcd      '_cd_project_directory'
 abbr --add pqci     '_project_quick_checkin'
 abbr --add ptd      '_project_detach_from_tmux_session'
 abbr --add leave        'i out; ptd'
 abbr --add pnotes       '_find_project_notes'
+abbr --add goto 'project goto'

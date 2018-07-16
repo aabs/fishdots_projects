@@ -125,7 +125,7 @@ function project_goto -a project_name -d "switch projects"
 end
 
 function project_set -a project_name
-    set -U CURRENT_PROJECT_SN $project_name
+    set -x CURRENT_PROJECT_SN $project_name
 end
 
 function edit_project
@@ -171,7 +171,7 @@ function project_save -d "save all new or modified notes locally"
   fishdots_git_save $pp  "project $CURRENT_PROJECT_SN wip"
 end
 
-function project_sync -d "save all notes to origin repo"
+function project_sync -d "save all changes on current project to origin repo"
   set -l pp (project path $CURRENT_PROJECT_SN)
   fishdots_git_sync $pp  "project $CURRENT_PROJECT_SN wip"
 end
