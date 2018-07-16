@@ -109,23 +109,30 @@ function project_list_project_short_names
 end
 
 function project_list_project_long_names
-    for key in $_project_names
-	echo (assoc.get project_names[$key])
-    end
+  for key in $_project_names
+    echo (assoc.get project_names[$key])
+  end
 end
 
 function project_home -d "goto home dir of current project"
-    project_cd $CURRENT_PROJECT_SN    
+  project_cd $CURRENT_PROJECT_SN    
+  project_invoke_autorun 
+end
+
+function project_invoke_autorun -d "look for the autorun.fish file in the current folder, and if present source it"
+  if test -e "./autorun.fish"
+    source "./autorun.fish"
+  end
 end
 
 function project_goto -a project_name -d "switch projects"
-    ok "Switching to "(project_name $project_name)
-    project_set $project_name
-    project_home
+  ok "Switching to "(project_name $project_name)
+  project_set $project_name
+  project_home
 end
 
 function project_set -a project_name
-    set -x CURRENT_PROJECT_SN $project_name
+    set -U CURRENT_PROJECT_SN $project_name
 end
 
 function edit_project

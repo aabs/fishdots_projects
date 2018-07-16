@@ -11,5 +11,5 @@ end
 abbr --add pqci     '_project_quick_checkin'
 abbr --add ptd      '_project_detach_from_tmux_session'
 abbr --add leave        'i out; ptd'
-abbr --add pnotes       '_find_project_notes'
+abbr --add pnotes '_find_project_notes'
 abbr --add goto 'project goto'
