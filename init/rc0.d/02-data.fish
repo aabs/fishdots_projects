@@ -6,7 +6,7 @@
 # assoc.rm  name[key]
 # assoc.has_key name[key]
 
-    set _project_names fd thor probs fdp fdproj tlive ngoss relay
+    set _project_names fd thor probs fdp fdproj tlive ngoss tsdb vsparc mqtt
 # old porject names:  coins career notes kops  erl 
     assoc.set project_paths[tlive]   "$HOME/dev/by-technology/elixir/tlive"    
     assoc.set project_names[tlive]  "TLive 2 Development"    
@@ -23,15 +23,22 @@
     assoc.set project_paths[fdproj]    "$FISHDOTS_PLUGINS_HOME/fishdots_projects"
     assoc.set project_names[fdproj]   "Fishdots plugin for projects"
 
-    assoc.set project_paths[relay]    "$PROJECT_HOME/by-technology/elixir/thor/tlive-thor-poc-relay"
-    assoc.set project_names[relay]    "THOR POC Relay"
-
-    assoc.set project_paths[ngoss]    "$PROJECT_HOME/by-technology/elixir/thor/tlive-thor-elk/ngoss"
+    assoc.set project_paths[ngoss]    "$PROJECT_HOME/by-technology/elixir/thor/tlive-thor-ngoss"
     assoc.set project_names[ngoss]    "NGOSS instance of LogStash in tlive thor elk"
 
     assoc.set project_paths[thor]    "$PROJECT_HOME/by-technology/elixir/thor/" 
     assoc.set project_names[thor]   "THOR home"	
 
+    assoc.set project_paths[tsdb]    "/home/d235108/dev/by-technology/elixir/benchmarks" 
+    assoc.set project_names[tsdb]   "TimescaleDB benchmarks"	
+
+    assoc.set project_paths[vsparc]    "/home/d235108/dev/by-technology/elixir/vsparc" 
+    assoc.set project_names[vsparc]   "vSPARC Home (Elixir)"	
+
+    assoc.set project_paths[mqtt]    "/home/d235108/dev/by-technology/python/vsparc/vsparc-mqtt-collector" 
+    assoc.set project_names[mqtt]   "vSPARC MQTT Collector"	
+
+    
 
 ################
 # OLD STUFF
@@ -51,3 +58,6 @@
 
 # assoc.set project_paths[coins]   "$FINANCE_DIR"    
 # assoc.set project_names[coins]  "Ledger crypto-coin accounts"    
+
+#assoc.set project_paths[relay]    "$PROJECT_HOME/by-technology/elixir/thor/tlive-thor-poc-relay"
+#assoc.set project_names[relay]    "THOR POC Relay"
