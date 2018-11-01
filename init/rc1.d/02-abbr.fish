@@ -13,3 +13,5 @@ abbr --add ptd      '_project_detach_from_tmux_session'
 abbr --add leave        'i out; ptd'
 abbr --add pnotes '_find_project_notes'
 abbr --add goto 'project goto'
+abbr --add incver 'cp version.txt tmpx; cat tmpx | perl -pe \'s/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e\' | tee -p --output-error=warn version.txt; rm tmpx'
+

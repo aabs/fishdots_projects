@@ -7,5 +7,5 @@ if not set -q PROJECT_HOME
 end
 
 if not set -q $CURRENT_PROJECT_SN
-    set -U CURRENT_PROJECT_SN ngoss
+    set -U CURRENT_PROJECT_SN vsparc
 end

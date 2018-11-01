@@ -6,8 +6,10 @@
 # assoc.rm  name[key]
 # assoc.has_key name[key]
 
-    set _project_names fd thor probs fdp fdproj tlive ngoss tsdb vsparc mqtt
-# old porject names:  coins career notes kops  erl 
+    set _project_names fd thor probs fdp fdproj tlive ngoss tsdb vsparc
+
+# old porject names:  coins career notes kops  erl mqtt
+
     assoc.set project_paths[tlive]   "$HOME/dev/by-technology/elixir/tlive"    
     assoc.set project_names[tlive]  "TLive 2 Development"    
 
@@ -32,13 +34,8 @@
     assoc.set project_paths[tsdb]    "/home/d235108/dev/by-technology/elixir/benchmarks" 
     assoc.set project_names[tsdb]   "TimescaleDB benchmarks"	
 
-    assoc.set project_paths[vsparc]    "/home/d235108/dev/by-technology/elixir/vsparc" 
-    assoc.set project_names[vsparc]   "vSPARC Home (Elixir)"	
-
-    assoc.set project_paths[mqtt]    "/home/d235108/dev/by-technology/python/vsparc/vsparc-mqtt-collector" 
-    assoc.set project_names[mqtt]   "vSPARC MQTT Collector"	
-
-    
+    assoc.set project_paths[vsparc]  "/home/d235108/dev/by-technology/python/vsparc/tlive-vsparc" 
+    assoc.set project_names[vsparc]  "vSPARC Solution"	
 
 ################
 # OLD STUFF
