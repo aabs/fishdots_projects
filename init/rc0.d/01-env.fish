@@ -6,6 +6,6 @@ if not set -q PROJECT_HOME
   end
 end
 
-if not set -q $CURRENT_PROJECT_SN
-    set -U CURRENT_PROJECT_SN vsparc
-end
+#if not set -q $CURRENT_PROJECT_SN
+#set -U CURRENT_PROJECT_SN vsparc2
+#end

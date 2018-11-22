@@ -6,7 +6,7 @@
 # assoc.rm  name[key]
 # assoc.has_key name[key]
 
-    set _project_names fd thor probs fdp fdproj tlive ngoss tsdb vsparc
+    set _project_names fd thor probs fdp fdproj tlive ngoss tsdb vsparc2 vsparc vsparc3 nix
 
 # old porject names:  coins career notes kops  erl mqtt
 
@@ -28,14 +28,23 @@
     assoc.set project_paths[ngoss]    "$PROJECT_HOME/by-technology/elixir/thor/tlive-thor-ngoss"
     assoc.set project_names[ngoss]    "NGOSS instance of LogStash in tlive thor elk"
 
+    assoc.set project_paths[vsparc3]    "$PROJECT_HOME/by-technology/elixir/vsparc/persistence/vsparc_tsdb_relay" 
+    assoc.set project_names[vsparc3]   "vSPARC TSDB database persistence"	
+
     assoc.set project_paths[thor]    "$PROJECT_HOME/by-technology/elixir/thor/" 
     assoc.set project_names[thor]   "THOR home"	
+
+    assoc.set project_paths[nix]    "/home/d235108/dev/by-technology/nix/exercises"
+    assoc.set project_names[nix]   "Nix Exercises"	
 
     assoc.set project_paths[tsdb]    "/home/d235108/dev/by-technology/elixir/benchmarks" 
     assoc.set project_names[tsdb]   "TimescaleDB benchmarks"	
 
-    assoc.set project_paths[vsparc]  "/home/d235108/dev/by-technology/python/vsparc/tlive-vsparc" 
+    assoc.set project_paths[vsparc]  "/home/d235108/dev/by-technology/python/vsparc/vsparc_mqtt_collector" 
     assoc.set project_names[vsparc]  "vSPARC Solution"	
+
+    assoc.set project_paths[vsparc2]  "/home/d235108/dev/by-technology/python/vsparc/tlive-vsparc" 
+    assoc.set project_names[vsparc2]  "Nixified vSPARC Solution"	
 
 ################
 # OLD STUFF
