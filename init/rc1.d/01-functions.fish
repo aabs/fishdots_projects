@@ -16,6 +16,8 @@ function project
         project_home
     case ls
         project_list
+    case open
+        project_open
     case path
         project_path $argv[2]
     case save
@@ -182,3 +184,26 @@ function project_sync -d "save all changes on current project to origin repo"
   set -l pp (project path $CURRENT_PROJECT_SN)
   fishdots_git_sync $pp  "project $CURRENT_PROJECT_SN wip"
 end
+
+function project_open -d "select from existing projects"
+  set matches $_project_names
+  if test 1 -eq (count $matches) and test -d $matches
+    set -U FD_PROB_CURRENT $matches[1]
+    echo "chose option 1"
+    return
+  end
+  set -g dcmd "dialog --stdout --no-tags --menu 'select the project' 20 60 20 " 
+  set c 1
+  for option in $matches
+    set label (assoc.get project_names[$option])
+    set -g dcmd "$dcmd $option '$c $label'"
+    set c (math $c + 1)
+  end
+  set choice (eval "$dcmd")
+  clear
+  if test $status -eq 0
+    echo "choice was $choice"
+    project set $choice
+  end
+end
+
