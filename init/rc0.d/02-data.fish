@@ -11,7 +11,7 @@
     assoc.set project_paths[fd]    "$FISHDOTS"
     assoc.set project_names[fd]   "My Fish Dotfiles"
 
-    assoc.set project_paths[probs]   "$FD_PROBLEM_HOME"
+    assoc.set project_paths[probs]   "$FD_PROB_HOME"
     assoc.set project_names[probs]  "The Problems root directory"
 
     assoc.set project_paths[fdproj]    "$FISHDOTS_PLUGINS_HOME/fishdots_projects"
@@ -22,6 +22,9 @@
 
     assoc.set project_paths[wifidr_poc]   "$HOME/dev/by-technology/python/wifidr/prototypes/poc_transformation"
     assoc.set project_names[wifidr_poc]  "WiFi Doctor poc"
+
+    assoc.set project_paths[thorapi]  "/home/d235108/dev/by-technology/elixir/thor/thorapi"
+    assoc.set project_names[thorapi]  "THOR API"
 
 
 
@@ -58,9 +61,6 @@ assoc.set project_names[nix]   "Nix Exercises"
 
 assoc.set project_paths[tsdb]    "/home/d235108/dev/by-technology/elixir/benchmarks"
 assoc.set project_names[tsdb]   "TimescaleDB benchmarks"
-
-assoc.set project_paths[thorapi]  "/home/d235108/dev/by-technology/elixir/home/d235108/dev/by-technology/elixir/thor/thorapi"
-assoc.set project_names[thorapi]  "THOR API"
 
 # assoc.set project_paths[kops]    "/mnt/d/Synchronised/active_personal/Projects/by-technology/docker/kubernetes/kops"
 # assoc.set project_names[kops]   "Kubernetes kops experiments"
