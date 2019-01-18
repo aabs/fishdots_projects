@@ -119,6 +119,7 @@ end
 function project_home -d "goto home dir of current project"
   project_cd $CURRENT_PROJECT_SN    
   project_invoke_autorun 
+  switch_tmux_sessions $CURRENT_PROJECT_SN
 end
 
 function project_invoke_autorun -d "look for the autorun.fish file in the current folder, and if present source it"
@@ -196,7 +197,7 @@ function project_open -d "select from existing projects"
   set c 1
   for option in $matches
     set label (assoc.get project_names[$option])
-    set -g dcmd "$dcmd $option '$c $label'"
+    set -g dcmd "$dcmd $option '$c ($option) $label'"
     set c (math $c + 1)
   end
   set choice (eval "$dcmd")
@@ -204,6 +205,15 @@ function project_open -d "select from existing projects"
   if test $status -eq 0
     echo "choice was $choice"
     project set $choice
+    project home
+  end
+end
+
+function switch_tmux_sessions -a session_name
+  if contains $session_name (tm ls)
+    tm goto $session_name
+  else
+    tm new $session_name
   end
 end
 
