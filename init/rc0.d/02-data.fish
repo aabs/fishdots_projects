@@ -6,8 +6,11 @@
 # assoc.rm  name[key]
 # assoc.has_key name[key]
 
-set _project_names  fd probs fdproj vsparcpy tunnels wifidr ngoss spark rdf
+set _project_names  fd probs fdproj vsparcpy tunnels wifidr ngoss spark rdf tsrep
 
+
+assoc.set project_paths[tsrep]    "/home/d235108/dev/by-technology/timescale/replication"
+assoc.set project_names[tsrep]   "TimescaleDB Replication"
 
 assoc.set project_paths[rdf]    "/home/d235108/dev/by-technology/rdf"
 assoc.set project_names[rdf]   "rdf experiments"
