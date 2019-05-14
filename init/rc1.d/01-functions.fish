@@ -82,23 +82,28 @@ function project_help -d "display usage info"
 
 end
 
+function get_var_indirect -a prefix name
+  set -l p (echo -n "$prefix$name")
+  eval "echo -n $$p"
+end
+
 
 function project_path -a project_name
-    echo (assoc.get project_paths[$project_name])
+  get_var_indirect '_project_paths_' $project_name
 end
 
 function project_name -a project_name
-    echo (assoc.get project_names[$project_name])
+  get_var_indirect '_project_name_' $project_name
 end
 
 function project_list -d "list projects with descriptions"
     for key in $_project_names
         if test $key = $CURRENT_PROJECT_SN
             colour_print brblue "$key:  "
-            colour_print bryellow (assoc.get project_names[$key])
+            colour_print bryellow (get_var_indirect '_project_name_' $key)
         else
             colour_print green "$key:  "
-            colour_print normal (assoc.get project_names[$key])
+            colour_print normal (get_var_indirect '_project_name_' $key)
         end
         echo ""
     end
@@ -112,7 +117,7 @@ end
 
 function project_list_project_long_names
   for key in $_project_names
-    echo (assoc.get project_names[$key])
+    echo (get_var_indirect '_project_name_' $key)
   end
 end
 
@@ -196,7 +201,7 @@ function project_open -d "select from existing projects"
   set -g dcmd "dialog --stdout --no-tags --menu 'select the project' 20 60 20 " 
   set c 1
   for option in $matches
-    set label (assoc.get project_names[$option])
+    set label (get_var_indirect  '_project_name_' $option)
     set -g dcmd "$dcmd $option '$c ($option) $label'"
     set c (math $c + 1)
   end
