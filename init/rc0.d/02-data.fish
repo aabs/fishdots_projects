@@ -3,12 +3,10 @@ function _create_project_entry -S -e add_project
   set -l n $argv[1]
   set -l p $argv[2]
   set -l d $argv[3]
-  echo "Project: $n ($d $p)"
   if not contains $n $_project_names
-    echo "for real!"
-    set -g _project_names $_project_names $n
-    eval "set -g _project_paths_$n '$p'"
-    eval "set -g _project_name_$n '$d'"
+    set -U _project_names $_project_names $n
+    eval "set -U _project_paths_$n '$p'"
+    eval "set -U _project_name_$n '$d'"
   end
 end
 

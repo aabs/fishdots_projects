@@ -6,6 +6,9 @@ function project
     return
   end
   switch $argv[1]
+    case add
+      # project add <name> <path> <desc>
+      emit add_project $argv[2] $argv[3] $argv[4]
     case cd
         project_cd $argv[2]
     case goto
