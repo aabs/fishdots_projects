@@ -9,6 +9,8 @@ function project
     case add
       # project add <name> <path> <desc>
       emit add_project $argv[2] $argv[3] $argv[4]
+    case e
+        edit_project $argv[2]
     case cd
         project_cd $argv[2]
     case goto
@@ -23,12 +25,12 @@ function project
         project_open
     case path
         project_path $argv[2]
-    case save
-        project_save
     case set
         project_set $argv[2]
     case sync
         project_sync
+    case todo
+      emit task_project_new $argv[2]
     case '*'
       project_help
   end
@@ -46,43 +48,17 @@ function project_help -d "display usage info"
   echo ""
   echo "project <command> [options] [args]"
   echo ""
-  
-  echo "project cd"
-  echo "  change to home dir of project"
-  echo ""
-
-  echo "project goto"
-  echo "  change projects and go to home dir of chosen project"
-  echo ""
-
-  echo "project help"
-  echo "  display usage info"
-  echo ""
-
-  echo "project home"
-  echo "  go to the root directory of the current project"
-  echo ""
-
-  echo "project ls"
-  echo "  list all available projects"
-  echo ""
-
-  echo "project path"
-  echo "  get the root dir of the named project"
-  echo ""
-
-  echo "project save"
-  echo "  save contents of project dir locally"
-  echo ""
-
-  echo "project set"
-  echo "  change current project"
-  echo ""
-
-  echo "project sync"
-  echo "  save contents of project dir locally"
-  echo ""
-
+  _fd_display_option 'project' 'e' "edit in project home folder"
+  _fd_display_option 'project' 'cd' "change to home dir of project"
+  _fd_display_option 'project' "goto" "change projects and go to home dir of chosen project"
+  _fd_display_option 'project' "help" "display usage info"
+  _fd_display_option 'project' "home" "go to the root directory of the current project"
+  _fd_display_option 'project' "ls" "list all available projects"
+  _fd_display_option 'project' "open" "select and switch to project"
+  _fd_display_option 'project' "path" "get the root dir of the named project"
+  _fd_display_option 'project' "set" "change current project"
+  _fd_display_option 'project' "sync" "save contents of project dir locally"
+  _fd_display_option 'project' "todo" "create a task for this project"
 end
 
 function get_var_indirect -a prefix name
@@ -126,13 +102,12 @@ end
 
 function project_home -d "goto home dir of current project"
   project_cd $CURRENT_PROJECT_SN    
-  project_invoke_autorun 
   switch_tmux_sessions $CURRENT_PROJECT_SN
 end
 
-function project_invoke_autorun -d "look for the autorun.fish file in the current folder, and if present source it"
-  if test -e "./autorun.fish"
-    source "./autorun.fish"
+function project_invoke_autorun -e fd_entered_folder -a abs_path -d "look for the autorun.fish file in the current folder, and if present source it"
+  if test -e "$abs_path/autorun.fish"
+    source "$abs_path/autorun.fish"
   end
 end
 
@@ -148,16 +123,16 @@ end
 
 function edit_project
     project_home
-    $EDITOR 
+    eval "$EDITOR (project_path $CURRENT_PROJECT_SN)"
 end
+
+function project_back
+  _fd_leave
+end
+
 
 function project_cd -a project_name
-    cd (project_path $project_name)
-end
-
-
-function _create_project_task -a title
-    _create_task "$title +$CURRENT_PROJECT_SN"
+  _fd_enter (project_path $project_name)
 end
 
 function _create_project_note_dated -a project_name
