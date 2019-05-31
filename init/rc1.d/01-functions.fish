@@ -31,10 +31,23 @@ function project
         project_sync
     case todo
       emit task_project_new $argv[2]
+    case menu
+      project_menu
     case '*'
       project_help
   end
 end
+
+function project_menu
+  if test 0 -eq (count $argv)
+    set -l options "home" "ls" "open" "sync" "help"
+		menu $options
+    project $options[$menu_selected_index]
+  else 
+    project $argv
+  end
+end
+  
 
 function project_help -d "display usage info"
   
@@ -170,26 +183,10 @@ function project_sync -d "save all changes on current project to origin repo"
 end
 
 function project_open -d "select from existing projects"
-  set matches $_project_names
-  if test 1 -eq (count $matches) and test -d $matches
-    set -U FD_PROB_CURRENT $matches[1]
-    echo "chose option 1"
-    return
-  end
-  set -g dcmd "dialog --stdout --no-tags --menu 'select the project' 20 60 20 " 
-  set c 1
-  for option in $matches
-    set label (get_var_indirect  '_project_name_' $option)
-    set -g dcmd "$dcmd $option '$c ($option) $label'"
-    set c (math $c + 1)
-  end
-  set choice (eval "$dcmd")
-  clear
-  if test $status -eq 0
-    echo "choice was $choice"
-    project set $choice
-    project home
-  end
+  set pl (project_list_project_short_names | sort)
+  menu $pl
+  project set $pl[$menu_selected_index]
+  project home
 end
 
 function switch_tmux_sessions -a session_name
