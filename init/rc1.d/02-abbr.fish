@@ -17,3 +17,4 @@ abbr --add incver 'cp version.txt tmpx; cat tmpx | perl -pe \'s/^((\d+\.)*)(\d+)
 
 abbr --add prjo 'project open'
 abbr --add arf 'source (project_path $CURRENT_PROJECT_SN)/autorun.fish'
+abbr -a pcd 'project home'
