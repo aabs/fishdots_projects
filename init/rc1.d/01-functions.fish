@@ -1,6 +1,21 @@
 #!/usr/bin/fish
+define_command project "fishdots plugin for working on projects"
+define_subcommand project add on_project_add ""
 
-function project
+define_subcommand project add on_project_add "add a new project to the master list"
+define_subcommand project e on_project_edit "edit in project home folder"
+define_subcommand project cd on_project_home "change to home dir of project"
+define_subcommand project goto on_project_goto "change projects and go to home dir of chosen project"
+define_subcommand project home on_project_home "go to the root directory of the current project"
+define_subcommand project ls on_project_ls "list all available projects"
+define_subcommand_nonevented project open project_open "select and switch to project"
+define_subcommand project path on_project_path "get the root dir of the named project"
+define_subcommand project set on_project_set "change current project"
+define_subcommand project sync on_project_sync "save contents of project dir locally"
+define_subcommand project todo on_project_todo "create a task for this project"
+
+
+function old_project
   if test 0 -eq (count $argv)
     project_help
     return
@@ -36,7 +51,7 @@ function project
   end
 end
 
-function project_help -d "display usage info"
+function old_project_help -d "display usage info"
   
   echo "Projects:"
   colour_print normal "  Current Project: "
