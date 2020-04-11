@@ -3,12 +3,12 @@ define_command project "fishdots plugin for working on projects"
 define_subcommand project add on_project_add ""
 
 define_subcommand project add on_project_add "add a new project to the master list"
-define_subcommand project cd on_project_home "change to home dir of project"
-define_subcommand project cur on_project_cur "show the current project"
-define_subcommand project edit on_project_edit "edit in project home folder"
-define_subcommand project goto on_project_goto "change projects and go to home dir of chosen project"
-define_subcommand project home on_project_home "go to the root directory of the current project"
-define_subcommand project ls on_project_ls "list all available projects"
+define_subcommand_nonevented project cd on_project_home "change to home dir of project"
+define_subcommand_nonevented project cur project_cur "show the current project short name"
+define_subcommand_nonevented project edit project_edit "edit in project home folder"
+define_subcommand_nonevented project goto project_goto "change projects and go to home dir of chosen project"
+define_subcommand_nonevented project home project_home "go to the root directory of the current project"
+define_subcommand_nonevented project ls project_ls "list all available projects"
 define_subcommand_nonevented project open project_open "select and switch to project"
 define_subcommand project path on_project_path "get the root dir of the named project"
 define_subcommand project quicksave on_project_save "save and clean contents of project dir locally"
@@ -16,6 +16,8 @@ define_subcommand project set on_project_set "change current project"
 define_subcommand project save on_project_save "save contents of project dir locally"
 define_subcommand project sync on_project_sync "save project and push upstream"
 define_subcommand project todo on_project_todo "create a task for this project"
+define_subcommand project purge on_project_purge "remove all project config data"
+
 
 function get_var_indirect -a prefix name
   set -l p (echo -n "$prefix$name")
@@ -24,6 +26,14 @@ end
 
 function project_path -a project_name
   get_var_indirect '_project_paths_' $project_name
+end
+
+function project_cur
+  echo $CURRENT_PROJECT_SN
+end
+
+function project_cd -a sn 
+  cd (project_path $sn)
 end
 
 function project_name -a project_name
@@ -66,7 +76,7 @@ function project_invoke_autorun -e fd_entered_folder -a abs_path -d "look for th
   end
 end
 
-function project_goto -e on_project_goto -a project_name -d "switch projects"
+function project_goto -a project_name -d "switch projects"
   ok "Switching to "(project_name $project_name)
   project_set $project_name
   project_home
@@ -76,7 +86,7 @@ function project_set -e on_project_set -a project_name
     set -U CURRENT_PROJECT_SN $project_name
 end
 
-function edit_project -e on_project_edit
+function project_edit 
     project_home
     eval "$EDITOR (project_path $CURRENT_PROJECT_SN)"
 end
@@ -112,26 +122,11 @@ function project_sync -e on_project_sync -d "save all changes on current project
 end
 
 function project_open -d "select from existing projects"
-  set matches $_project_names
-  if test 1 -eq (count $matches) and test -d $matches
-    set -U FD_PROB_CURRENT $matches[1]
-    echo "chose option 1"
-    return
-  end
-  set -g dcmd "dialog --stdout --no-tags --menu 'select the project' 20 60 20 " 
-  set c 1
-  for option in $matches
-    set label (get_var_indirect  '_project_name_' $option)
-    set -g dcmd "$dcmd $option '$c ($option) $label'"
-    set c (math $c + 1)
-  end
-  set choice (eval "$dcmd")
-  clear
-  if test $status -eq 0
-    echo "choice was $choice"
-    project set $choice
-    project home
-  end
+    fd_item_selector $_project_names
+    if set -q fd_selected_item
+      project set $fd_selected_item
+      project home
+    end
 end
 
 function switch_tmux_sessions -a session_name
@@ -142,3 +137,8 @@ function switch_tmux_sessions -a session_name
   end
 end
 
+function project_purge -e on_project_purge -d "remove all project setting env vars"
+  for x in (set -u | egrep -Z "^_project" | cut -f1 -d' ')
+    set -e $x
+  end
+end
