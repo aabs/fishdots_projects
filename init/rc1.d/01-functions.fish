@@ -1,6 +1,5 @@
 #!/usr/bin/fish
 define_command project "fishdots plugin for working on projects"
-define_subcommand project add on_project_add ""
 
 define_subcommand project add on_project_add "add a new project to the master list"
 define_subcommand_nonevented project cd on_project_home "change to home dir of project"
@@ -8,7 +7,7 @@ define_subcommand_nonevented project cur project_cur "show the current project s
 define_subcommand_nonevented project edit project_edit "edit in project home folder"
 define_subcommand_nonevented project goto project_goto "change projects and go to home dir of chosen project"
 define_subcommand_nonevented project home project_home "go to the root directory of the current project"
-define_subcommand_nonevented project ls project_ls "list all available projects"
+define_subcommand_nonevented project ls project_list "list all available projects"
 define_subcommand_nonevented project open project_open "select and switch to project"
 define_subcommand project path on_project_path "get the root dir of the named project"
 define_subcommand project quicksave on_project_save "save and clean contents of project dir locally"
@@ -40,7 +39,7 @@ function project_name -a project_name
   get_var_indirect '_project_name_' $project_name
 end
 
-function project_list -e on_project_ls -d "list projects with descriptions"
+function project_list -d "list projects with descriptions"
     for key in $_project_names
         if test $key = $CURRENT_PROJECT_SN
             colour_print brblue "$key:  "
