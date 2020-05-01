@@ -16,7 +16,7 @@ define_subcommand project save on_project_save "save contents of project dir loc
 define_subcommand project sync on_project_sync "save project and push upstream"
 define_subcommand project todo on_project_todo "create a task for this project"
 define_subcommand project purge on_project_purge "remove all project config data"
-
+define_subcommand_nonevented project addtoboot  project_addtoboot "<name> <desc>  Create a project for here"
 
 function get_var_indirect -a prefix name
   set -l p (echo -n "$prefix$name")
@@ -140,4 +140,13 @@ function project_purge -e on_project_purge -d "remove all project setting env va
   for x in (set -u | egrep -Z "^_project" | cut -f1 -d' ')
     set -e $x
   end
+end
+
+
+function project_addtoboot -d '<name> <desc>  add a record to fd boot loader'
+  set -l name $argv[1]
+  set -l desc $argv[2..-1]
+  set -l x "_project_name_$name"
+  echo checking $x
+  echo "if not set -q $x; project add $name '$PWD' '$desc'; end" >> ~/(uname -n).post-local.fish
 end
