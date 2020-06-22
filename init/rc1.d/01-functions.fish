@@ -2,7 +2,7 @@
 define_command project "fishdots plugin for working on projects"
 
 define_subcommand project add on_project_add "add a new project to the master list"
-define_subcommand_nonevented project cd on_project_home "change to home dir of project"
+define_subcommand_nonevented project cd project_cd "<sn> change to home dir of project"
 define_subcommand_nonevented project cur project_cur "show the current project short name"
 define_subcommand_nonevented project edit project_edit "edit in project home folder"
 define_subcommand_nonevented project goto project_goto "change projects and go to home dir of chosen project"
