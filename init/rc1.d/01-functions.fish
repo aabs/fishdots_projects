@@ -83,6 +83,8 @@ end
 
 function project_set -e on_project_set -a project_name
     set -U CURRENT_PROJECT_SN $project_name
+# for things like starship that don't understand fish env var richness
+    set -x PROJECT_SN $project_name
 end
 
 function project_edit 
