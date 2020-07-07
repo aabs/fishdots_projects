@@ -18,13 +18,29 @@ define_subcommand project todo on_project_todo "create a task for this project"
 define_subcommand project purge on_project_purge "remove all project config data"
 define_subcommand_nonevented project addtoboot  project_addtoboot "<name> <desc>  Create a project for here"
 
+function __fd_projects_myyq -d "uses docker to access the contents of the projects.yaml file"
+  docker run --rm -i -v (pwd):/workdir mikefarah/yq:3 yq r $XDG_CONFIG_HOME/fishdots/config/projects.yaml $argv
+end
+
+function __fd_projects_select_project -d "provides a selector for projects"
+  __fd_projects_myyq 'project.*.shortname' | fzf
+end
+
+function __fd_projects_description -a name -d ""
+  __fd_projects_myyq "project.$name.description"
+end
+
+function __fd_projects_shortname -a name -d ""
+  __fd_projects_myyq "project.$name.shortname"
+end
+
+function __fd_projects_path -a name -d ""
+  __fd_projects_myyq "project.$name.path"
+end
+
 function get_var_indirect -a prefix name
   set -l p (echo -n "$prefix$name")
   eval "echo -n $$p"
-end
-
-function project_path -a project_name
-  get_var_indirect '_project_paths_' $project_name
 end
 
 function project_cur
@@ -32,36 +48,23 @@ function project_cur
 end
 
 function project_cd -a sn 
-  cd (project_path $sn)
+  cd (__fd_projects_path $sn)
 end
 
 function project_name -a project_name
-  get_var_indirect '_project_name_' $project_name
+  __fd_projects_shortname $project_name
 end
 
 function project_list -d "list projects with descriptions"
-    for key in $_project_names
-        if test $key = $CURRENT_PROJECT_SN
-            colour_print brblue "$key:  "
-            colour_print bryellow (get_var_indirect '_project_name_' $key)
-        else
-            colour_print green "$key:  "
-            colour_print normal (get_var_indirect '_project_name_' $key)
-        end
-        echo ""
-    end
+  __fd_projects_myyq 'project.*.shortname'
 end
 
 function project_list_project_short_names
-    for key in $_project_names
-		echo $key        
-    end
+  __fd_projects_myyq 'project.*.shortname'
 end
 
 function project_list_project_long_names
-  for key in $_project_names
-    echo (get_var_indirect '_project_name_' $key)
-  end
+  __fd_projects_myyq 'project.*.description'
 end
 
 function project_home -e on_project_home -d "goto home dir of current project"
@@ -88,8 +91,8 @@ function project_set -e on_project_set -a project_name
 end
 
 function project_edit 
-    project_home
-    eval "$EDITOR (project_path $CURRENT_PROJECT_SN)"
+    project_cd $CURRENT_PROJECT_SN
+    eval "$EDITOR (__fd_projects_path $CURRENT_PROJECT_SN)"
 end
 
 function _create_project_note_dated -a project_name
